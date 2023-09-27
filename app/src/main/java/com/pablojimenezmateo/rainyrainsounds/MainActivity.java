@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         RandomThunderRunnerSingleton thunderRunner = initializeThunderRunner();
         initializeListeners(thunderRunner);
+        initializeChurchBellRunner();
 
         // Check if the activity is being created for the first time
         if (savedInstanceState == null) {
@@ -81,6 +82,19 @@ public class MainActivity extends AppCompatActivity {
             playSound(thunder_name, 0);
         });
 
+        return runner;
+    }
+
+    public ChurchBellRunnerSingleton initializeChurchBellRunner() {
+        Log.d("RainyRain", "Initializing church bell runner");
+
+        ChurchBellRunnerSingleton runner = ChurchBellRunnerSingleton.getInstance(() -> {
+
+            // If it is still playing, delete its resources and replay it
+            stopSound("church_bell");
+            playSound("church_bell", 0);
+        });
+        runner.start();
         return runner;
     }
 
